@@ -12,7 +12,7 @@ class VQVAE(nn.Module):
                  n_embeddings, embedding_dim, beta, save_img_embedding_map=False):
         super(VQVAE, self).__init__()
         # encode image into continuous latent space
-        self.encoder = Encoder(3, h_dim, n_res_layers, res_h_dim)
+        self.encoder = Encoder(1, h_dim, n_res_layers, res_h_dim)
         self.pre_quantization_conv = nn.Conv2d(
             h_dim, embedding_dim, kernel_size=1, stride=1)
         # pass continuous latent vector through discretization bottleneck
@@ -20,6 +20,7 @@ class VQVAE(nn.Module):
             n_embeddings, embedding_dim, beta)
         # decode the discrete latent representation
         self.decoder = Decoder(embedding_dim, h_dim, n_res_layers, res_h_dim)
+        # Decoder(128, 128, 3, 64)
 
         if save_img_embedding_map:
             self.img_to_embedding_map = {i: [] for i in range(n_embeddings)}
@@ -27,8 +28,8 @@ class VQVAE(nn.Module):
             self.img_to_embedding_map = None
 
     def forward(self, x, verbose=False):
-
-        z_e = self.encoder(x)
+        print('x shape:', x.shape)
+        z_e = self.encoder(x.float())
 
         z_e = self.pre_quantization_conv(z_e)
         embedding_loss, z_q, perplexity, _, _ = self.vector_quantization(

@@ -6,7 +6,7 @@ You can find the author's [original implementation in Tensorflow here](https://g
 
 ## Installing Dependencies
 
-To install dependencies, create a conda or virtual environment with Python 3 and then run `pip install -r requirements.txt`. 
+To install dependencies, create a conda or virtual environment with Python 3.9 (we suspect 3.10 and up will work, but 3.13 does not) and then run `pip install -r requirements.txt`. 
 
 ## Running the VQ VAE
 

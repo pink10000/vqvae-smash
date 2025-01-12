@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 from torch.utils.data import Dataset
-
+from sklearn.model_selection import train_test_split
 
 class BlockDataset(Dataset):
     """
@@ -43,6 +43,25 @@ class LatentBlockDataset(Dataset):
         print('Done loading latent block data')
         
         self.data = data[:-500] if train else data[-500:]
+        self.transform = transform
+
+    def __getitem__(self, index):
+        img = self.data[index]
+        if self.transform is not None:
+            img = self.transform(img)
+        label = 0
+        return img, label
+
+    def __len__(self):
+        return len(self.data)
+
+class GravitationalHackathonDataset(Dataset):
+    """
+    Loads gravitational hackathon dataset
+    """
+
+    def __init__(self, data, train=True, transform=None):
+        self.data = data[:-20000] if train else data[-20000:]
         self.transform = transform
 
     def __getitem__(self, index):
