@@ -25,6 +25,13 @@ parser.add_argument("--learning_rate", type=float, default=3e-4)
 parser.add_argument("--log_interval", type=int, default=50)
 ```
 
+## Running for SMASH:
+```
+python main.py --dataset hackathon --n_hiddens 128 --n_residual_layers 3 --n_residual_hiddens 64 --embedding_dim 128 --save
+```
+and ensure the data is in `data/` in the root folder.
+
+
 ## Models
 
 The VQ VAE has the following fundamental model components:
